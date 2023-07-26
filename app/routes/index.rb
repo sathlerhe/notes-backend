@@ -12,7 +12,7 @@ end
 
 before do
   if request.env['CONTENT_TYPE'] == 'application/json' && !params[:path]
-    @params = JSON.parse(request.body.read).symbolize_keys
+    @body = JSON.parse(request.body.read).symbolize_keys
   end
 end
 
@@ -25,11 +25,13 @@ get '/notes/:id' do
 end
 
 post '/notes' do
-  response_result(NotesController.new.create(params))
+  payload = request.env['CONTENT_TYPE'] == 'application/json' ? @body : params
+  response_result(NotesController.new.create(payload))
 end
 
 put '/notes/:id' do
-  response_result(NotesController.new.update_note(params))
+  payload = request.env['CONTENT_TYPE'] == 'application/json' ? @body : params
+  response_result(NotesController.new.update_note(params[:id], payload))
 end
 
 delete '/notes/:id' do

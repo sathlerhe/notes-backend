@@ -33,15 +33,15 @@ class NotesController
     Error::NotFound.new("Not found id #{id}").call
   end
 
-  def update_note(params)
+  def update_note(id, body)
     note_body = {
-      content: params[:content]
+      content: body[:content]
     }
-    note = Notes.find(params[:id])
+    note = Notes.find(id)
     note.update(note_body)
     { result: note, status: 200 }
   rescue ActiveRecord::RecordNotFound
-    Error::NotFound.new("Not found id #{params[:id]}").call
+    Error::NotFound.new("Not found id #{id}").call
   end
 
   def delete_note(params)
