@@ -30,7 +30,7 @@ class NotesController
     note = Notes.find(id)
     { result: note, status: 200 }
   rescue ActiveRecord::RecordNotFound
-    Error::NotFound.new("Not found id #{params[:id]}").call
+    Error::NotFound.new("Not found id #{id}").call
   end
 
   def update_note(params)
@@ -47,7 +47,7 @@ class NotesController
   def delete_note(params)
     note = Notes.find(params[:id])
     note.destroy
-    { result: 'ok', status: 200 }.to_json
+    { result: 'ok', status: 200 }
   rescue ActiveRecord::RecordNotFound
     Error::NotFound.new("Not found id #{params[:id]}").call
   end
