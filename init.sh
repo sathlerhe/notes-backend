@@ -1,1 +1,1 @@
-bundle && rake db:create && rake db:migrate && ruby app.rb
+bundle && bundle exec rake -T && rake db:create && rake db:migrate && ruby app.rb
